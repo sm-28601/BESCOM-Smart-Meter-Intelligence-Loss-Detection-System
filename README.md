@@ -1,6 +1,6 @@
 # BESCOM Smart Meter Intelligence & Loss Detection System
 
-![BESCOM Smart Meter Dashboard Feature Image](https://github.com/sm-28601/BESCOM-Smart-Meter-Intelligence-Loss-Detection-System/raw/main/public/demo-assets/screenshot.png) *(Note: Please add screenshot to public/demo-assets/screenshot.png)*
+![BESCOM Smart Meter Dashboard Feature Image](https://github.com/sm-28601/BESCOM-Smart-Meter-Intelligence-Loss-Detection-System/raw/main/public/demo-assets/screenshot.png)
 
 A comprehensive web-based intelligence dashboard developed for the Bangalore Electricity Supply Company (BESCOM). The platform is designed to monitor smart meter data in real-time to detect anomalies, identify potential power theft or meter tampering, and track grid load risks. 
 
