@@ -1,222 +1,67 @@
-# Flow Shader Frontend Template
+# BESCOM Smart Meter Intelligence & Loss Detection System
 
-An immersive studio / portfolio template built around a persistent full-screen WebGL fluid shader background. Hero, philosophy carousel and featured-works gallery all share the same living shader, then the page transitions into a solid-dark mediums glossary and footer. Clicking any gallery project opens a detail page with a full editorial article on the left and a sticky image on the right.
+![BESCOM Smart Meter Dashboard Feature Image](https://github.com/sm-28601/BESCOM-Smart-Meter-Intelligence-Loss-Detection-System/raw/main/public/demo-assets/screenshot.png) *(Note: Please add screenshot to public/demo-assets/screenshot.png)*
 
-## Features
+A comprehensive web-based intelligence dashboard developed for the Bangalore Electricity Supply Company (BESCOM). The platform is designed to monitor smart meter data in real-time to detect anomalies, identify potential power theft or meter tampering, and track grid load risks. 
 
-- Persistent Three.js fluid shader background (`FluidBackground`), shared across the first three sections
-- GSAP + Lenis smooth scroll
-- Full-screen hero with large bilingual wordmark, eyebrow + title + description + CTA
-- Scroll-driven 3D rolling text ring with speed-reactive skew and blur
-- Asymmetric, vertically-staggered featured works gallery
-- Detail sub-page with sticky article-style layout (left article, right sticky image), preserves scroll position on back
-- Gooey-SVG hover rows in the mediums glossary
-- Full-width footer with ambient video background
+It features an edge-optimized live anomaly feed, an interactive investigation view that compares household consumption against peer baselines, an audit logging system, and a robust demand forecasting module equipped with predictive load curves and zone-wise distributions.
 
-## Tech Stack
+## Core Features
 
-- React 19 + TypeScript + Vite
-- Three.js (fluid background shader)
-- GSAP + ScrollTrigger (rolling ring animation)
-- Lenis (smooth scroll)
-- Tailwind CSS + shadcn/ui primitives
+- **Live Anomaly Feed**: Edge-optimized paginated feed with confidence scores and alert severities.
+- **Interactive Consumption Analysis**: Click-to-investigate workflow providing an in-depth Recharts line chart comparing household consumption to peer baseline (zone average) over 24 hours. The exact point of anomaly is explicitly highlighted.
+- **Resizable Panels**: Adjustable dual-column interface dividing the data feed and investigation view using `react-resizable-panels`.
+- **Demand Forecasting**: Hourly and weekly load predictions leveraging STLF (Short Term Load Forecast) utilizing Synthetic ML/Deep Learning outputs. Features peak and average visualization alongside model accuracy (MAPE, RMSE).
+- **UX4G Government Compliance**: Sober "government navy" UI, minimalistic animations, scalable typographies (Inter + Roboto Mono), and accessible layout standards without gamified interfaces.
+- **Audit Logging**: Robust tracking of system operations, alerts resolved, and field inspections initiated.
 
-## Quick Start
+## Technology Stack
 
-1. `npm install`
-2. Edit `src/config.ts` with your content
-3. Add images and videos into `public/images/` and `public/videos/`
-4. `npm run dev`
-5. `npm run build` for production
+- **Framework**: React 19 + TypeScript + Vite
+- **Styling**: Tailwind CSS (Custom extended UI palette including BESCOM navy, neutral grays, and alert colors)
+- **Charts & Vis**: Recharts
+- **Components**: `react-resizable-panels` for responsive investigation views 
 
-## Configuration
+## Quick Start (Local Development)
 
-All editable content lives in `src/config.ts`. Do not modify component files unless you are fixing a real bug.
+### Prerequisites
 
-### `siteConfig`
+- Node.js `^20.0.0` or later
+- npm or yarn
 
-```ts
-export const siteConfig = {
-  language: "",          // e.g. "en", "zh-CN"
-  siteTitle: "",         // Browser tab title
-  siteDescription: "",   // Meta description
-}
-```
+### Installation
 
-### `navigationConfig`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sm-28601/BESCOM-Smart-Meter-Intelligence-Loss-Detection-System.git
+   cd BESCOM-Smart-Meter-Intelligence-Loss-Detection-System
+   ```
 
-```ts
-export const navigationConfig = {
-  brandMark: "",         // Short brand mark shown in the nav (1–3 chars works best)
-  links: [
-    // { label: "项目", targetId: "gallery" },
-    // { label: "介质", targetId: "mediums" },
-    // { label: "哲思", targetId: "philosophy" },
-    // { label: "联络", targetId: "footer" },
-  ],
-}
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-`targetId` must match the id of the section wrapper in `App.tsx`. Valid ids: `hero-section`, `philosophy`, `gallery`, `mediums`, `footer`.
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-### `heroConfig`
+4. The application will be available at `http://localhost:5173/`
 
-```ts
-export const heroConfig = {
-  wordmarkText: "",       // Large wordmark on the left half
-  eyebrow: "",            // Small uppercase label
-  titleLine1: "",         // Title line 1
-  titleLine2: "",         // Title line 2 (optional)
-  descriptionLine1: "",   // Description line 1
-  descriptionLine2: "",   // Description line 2 (optional)
-  ctaText: "",            // Button text
-  ctaTargetId: "",        // Scroll target on CTA click, e.g. "philosophy"
-}
-```
+### Production Build
 
-### `philosophyConfig`
-
-```ts
-export const philosophyConfig = {
-  eyebrow: "",            // Small uppercase label
-  title: "",              // Section title
-  body: "",               // Short paragraph
-  rollingWords: [],       // Words shown in the 3D rolling ring on the right
-}
-```
-
-### `galleryConfig`
-
-```ts
-export const galleryConfig = {
-  sectionLabel: "",       // Uppercase section label, e.g. "FEATURED WORKS / 002"
-  title: "",              // Section heading
-  projects: [
-    // {
-    //   id: "P-001",                        // Unique id
-    //   title: "",                           // Short title
-    //   location: "",                        // Location string
-    //   year: "",                            // Year string
-    //   image: "images/project-1.jpg",       // Main image
-    //   subtitle: "",                        // One-line italic subtitle in the detail page
-    //   meta: [
-    //     { label: "", value: "" },
-    //   ],
-    //   paragraphs: [                        // 2–4 paragraphs of body copy
-    //     "",
-    //   ],
-    // }
-  ],
-}
-```
-
-### `mediumsConfig`
-
-```ts
-export const mediumsConfig = {
-  sectionLabel: "",       // Uppercase label above the list
-  items: [
-    // { cn: "", en: "", description: "" }
-  ],
-}
-```
-
-### `footerConfig`
-
-```ts
-export const footerConfig = {
-  visionText: "",         // Long vision paragraph (serif display)
-  brandName: "",          // Bottom-left brand name
-  columns: [
-    // {
-    //   heading: "",
-    //   entries: [
-    //     { text: "hello@example.com", href: "mailto:hello@example.com" },
-    //     { text: "Instagram", href: "#" },
-    //     { text: "Multi\nline\naddress" },   // No href = plain text
-    //   ],
-    // }
-  ],
-  copyright: "",
-  videoPath: "",          // Optional ambient footer video, e.g. "videos/footer.mp4"
-}
-```
-
-### `projectDetailConfig`
-
-```ts
-export const projectDetailConfig = {
-  backLabel: "",          // Back button label, e.g. "← 返回" or "← Back"
-}
-```
-
-## Required Images
-
-Paths are relative to `public/`.
-
-### Projects (1 per entry in `galleryConfig.projects`)
-- `images/project-*.jpg` — 1024×1536 portrait recommended
-
-### Videos
-- `videos/footer-*.mp4` — optional ambient footer loop (muted, short, looping)
-
-## Design
-
-**Colors:**
-- Base: `#050A0F` (deep blue-black)
-- Text on shader: white with text-shadow `0 2px 24px rgba(0,0,0,0.45)`
-- Warm ivory on dark sections: `#EDE8E4`
-- Cyan accent: `#30B0D0`
-
-**Fonts:** (loaded from Google Fonts in `index.html`)
-- Display: Noto Serif SC
-- Body: Noto Sans SC
-
-**Animations:**
-- Full-screen Three.js fluid shader, shared across hero / philosophy / gallery
-- IntersectionObserver toggles the shader render loop so it pauses below the fold
-- GSAP ScrollTrigger + scrub drives the 3D rolling ring with skew + motion-blur
-- Lenis smooth scroll globally
-- Gooey SVG blur + swap on mediums rows
-
-## Build
+To compile the application for production deployment:
 
 ```bash
 npm run build
+npm run preview
 ```
 
-Output is written to `dist/`.
+## Synthetic Data
 
-## Project Structure
+The current iteration of the system is pre-loaded with synthetic operational data representing a selection of BESCOM jurisdictions (Jayanagar, Koramangala, Whitefield, etc.). The simulated data files can be accessed at `src/data/syntheticData.ts`. It securely models edge alerts such as _"Phase Current Drop"_, _"Bypass Suspected"_, and _"Neutral Disturbance"_. 
 
-```
-3-flow-shader-frontend/
-├── index.html
-├── package.json
-├── public/
-│   ├── images/.gitkeep       # Drop project images here
-│   └── videos/.gitkeep       # Optional footer video
-└── src/
-    ├── config.ts             # ⭐ All editable content
-    ├── main.tsx
-    ├── App.tsx
-    ├── index.css
-    ├── components/
-    │   ├── FluidBackground.tsx
-    │   └── Navigation.tsx
-    ├── sections/
-    │   ├── HeroField.tsx
-    │   ├── PhilosophyCarousel.tsx
-    │   ├── ImmersiveGallery.tsx
-    │   ├── MediumsGlossary.tsx
-    │   └── Footer.tsx
-    └── pages/
-        └── ProjectDetail.tsx
-```
+## License
 
-## Notes
-
-- All content goes in `src/config.ts`.
-- Images and videos go in `public/images/` and `public/videos/`.
-- Don't modify component files unless fixing a real bug — the fluid shader, scroll ring, and detail-page scroll restoration are load-bearing.
-- Color / font / spacing tokens are hardcoded in component styles and in `tailwind.config.js`.
+This project is tailored for governmental digital infrastructure demonstrations. Standard copyright restrictions may apply depending on usage and integration protocols.
