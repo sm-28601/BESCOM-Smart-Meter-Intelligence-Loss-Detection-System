@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f1f3f5;
+    color: #212529;
+    line-height: 1.5;
+  }
+
+  /* Government-style scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f3f5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #adb5bd;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6c757d;
+  }
+}
+
+@layer components {
+  /* KPI Card */
+  .kpi-card {
+    @apply bg-white rounded border border-slate-200 p-5 shadow-card;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .kpi-card:hover {
+    @apply shadow-card-hover;
+  }
+
+  /* Data Table Styles */
+  .data-table {
+    @apply w-full text-sm;
+  }
+
+  .data-table thead {
+    @apply bg-slate-100 border-b-2 border-slate-200;
+  }
+
+  .data-table th {
+    @apply px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider;
+  }
+
+  .data-table td {
+    @apply px-4 py-3 text-sm text-slate-700 border-b border-slate-100;
+  }
+
+  .data-table tbody tr {
+    @apply transition-colors duration-150;
+  }
+
+  .data-table tbody tr:hover {
+    @apply bg-slate-50;
+  }
+
+  .data-table tbody tr.selected {
+    @apply bg-gov-navy bg-opacity-5 border-l-3 border-l-gov-navy;
+  }
+
+  /* Badge / Pill */
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+  }
+
+  .badge-critical {
+    @apply bg-alert-red-light text-alert-red;
+  }
+
+  .badge-warning {
+    @apply bg-alert-amber-light text-amber-800;
+  }
+
+  .badge-normal {
+    @apply bg-alert-green-light text-alert-green;
+  }
+
+  /* Confidence bar */
+  .confidence-bar {
+    @apply h-1.5 rounded-full bg-slate-200;
+  }
+
+  .confidence-fill {
+    @apply h-full rounded-full transition-all duration-300;
+  }
+
+  /* Sidebar */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-md transition-colors duration-150;
+  }
+
+  .sidebar-link-active {
+    @apply bg-white bg-opacity-15 text-white;
+  }
+
+  .sidebar-link-inactive {
+    @apply text-blue-100 text-opacity-70 hover:bg-white hover:bg-opacity-10 hover:text-white;
+  }
+
+  /* Page card panel */
+  .panel {
+    @apply bg-white rounded border border-slate-200 shadow-card;
+  }
+
+  .panel-header {
+    @apply px-5 py-4 border-b border-slate-200;
+  }
+
+  .panel-body {
+    @apply p-5;
+  }
+
+  /* Resizable panel drag handle */
+  .resize-handle-vertical {
+    @apply w-2 mx-1 relative flex items-center justify-center;
+    transition: background-color 0.15s ease;
+  }
+
+  .resize-handle-vertical::after {
+    content: '';
+    @apply absolute w-0.5 rounded-full bg-slate-300;
+    height: 40px;
+    transition: all 0.15s ease;
+  }
+
+  .resize-handle-vertical:hover::after,
+  .resize-handle-vertical[data-resize-handle-state="drag"]::after {
+    @apply bg-gov-navy;
+    height: 60px;
+    width: 3px;
+  }
+
+  .resize-handle-vertical:hover {
+    cursor: col-resize;
+  }
+
+  /* Profile dropdown */
+  .profile-dropdown {
+    @apply absolute right-0 top-full mt-2 w-72 bg-white rounded-lg border border-slate-200 shadow-lg z-50;
+    animation: dropdownFadeIn 0.15s ease-out;
+  }
+
+  @keyframes dropdownFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer utilities {
+  .border-l-3 {
+    border-left-width: 3px;
+  }
+}
