@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceDot,
 } from 'recharts';
-import type { MeterDetail, ConsumptionDataPoint } from '../data/syntheticData';
+import type { MeterDetail } from '../data/syntheticData';
 
 /**
  * ConsumptionChart — Interactive line chart showing household consumption vs peer baseline

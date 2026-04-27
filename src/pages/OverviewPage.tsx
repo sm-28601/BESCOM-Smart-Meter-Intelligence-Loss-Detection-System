@@ -26,7 +26,7 @@ export const OverviewPage: React.FC = () => {
 
       {/* Main Content — Resizable Two Column Layout */}
       {selectedMeter ? (
-        <Group direction="horizontal" className="min-h-[600px]">
+        <Group orientation="horizontal" className="min-h-[600px]">
           {/* Left: Anomaly Feed — resizable */}
           <Panel defaultSize={40} minSize={25} maxSize={65}>
             <div className="h-full pr-0">

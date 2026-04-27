@@ -26,7 +26,7 @@ export const AnomalyFeedPage: React.FC<AnomalyFeedPageProps> = ({
   return (
     <div className="p-6" id="anomaly-feed-page">
       {selectedMeter ? (
-        <Group direction="horizontal" className="min-h-[600px]">
+        <Group orientation="horizontal" className="min-h-[600px]">
           {/* Left: Full Feed — resizable */}
           <Panel defaultSize={40} minSize={25} maxSize={65}>
             <div className="h-full pr-0">
