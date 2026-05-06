@@ -24,12 +24,12 @@ export const AnomalyFeedPage: React.FC<AnomalyFeedPageProps> = ({
   const selectedMeter = selectedMeterId ? meterDetails[selectedMeterId] : null;
 
   return (
-    <div className="p-6" id="anomaly-feed-page">
+    <div className="p-6 h-[calc(100vh-80px)] overflow-hidden flex flex-col" id="anomaly-feed-page">
       {selectedMeter ? (
-        <Group orientation="horizontal" className="min-h-[600px]">
+        <Group direction="horizontal" className="flex-1 w-full overflow-hidden">
           {/* Left: Full Feed — resizable */}
           <Panel defaultSize={40} minSize={25} maxSize={65}>
-            <div className="h-full pr-0">
+            <div className="h-full pr-2 overflow-hidden flex flex-col">
               <DataTable
                 data={anomalyFeed}
                 selectedMeterId={selectedMeterId}
@@ -39,22 +39,24 @@ export const AnomalyFeedPage: React.FC<AnomalyFeedPageProps> = ({
           </Panel>
 
           {/* Drag Handle */}
-          <Separator className="resize-handle-vertical" />
+          <Separator className="resize-handle-vertical cursor-col-resize" />
 
           {/* Right: Investigation — resizable */}
           <Panel defaultSize={60} minSize={35} maxSize={75}>
-            <div className="h-full pl-0 space-y-5 overflow-y-auto max-h-[calc(100vh-220px)]">
+            <div className="h-full pl-2 space-y-5 overflow-y-auto">
               <ConsumptionChart meter={selectedMeter} />
               <MeterDetailPanel meter={selectedMeter} onClose={onClose} />
             </div>
           </Panel>
         </Group>
       ) : (
-        <DataTable
-          data={anomalyFeed}
-          selectedMeterId={selectedMeterId}
-          onSelectMeter={onSelectMeter}
-        />
+        <div className="flex-1 overflow-hidden flex flex-col">
+          <DataTable
+            data={anomalyFeed}
+            selectedMeterId={selectedMeterId}
+            onSelectMeter={onSelectMeter}
+          />
+        </div>
       )}
     </div>
   );

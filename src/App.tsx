@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Toaster } from 'sonner';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { OverviewPage } from './pages/OverviewPage';
@@ -65,11 +66,12 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100 flex flex-col">
+      <Toaster position="top-right" richColors />
       <Header currentTime={currentTime} />
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar activeNav={activeNav} onNavChange={handleNavChange} />
-        <main className="flex-1 min-h-[calc(100vh-56px)] overflow-auto">
+        <main className="flex-1 overflow-auto bg-slate-100 relative">
           {renderPage()}
         </main>
       </div>

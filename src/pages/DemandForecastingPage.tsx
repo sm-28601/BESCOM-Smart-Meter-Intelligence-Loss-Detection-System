@@ -58,7 +58,7 @@ const hourlyForecast = Array.from({ length: 24 }, (_, h) => {
   };
 });
 
-// Zone-wise load distribution
+// Zone-wise load distribution with risk classification
 const zoneLoadData = [
   { zone: 'Jayanagar', current: 342, peak: 410, capacity: 500 },
   { zone: 'Koramangala', current: 285, peak: 360, capacity: 450 },
@@ -69,6 +69,20 @@ const zoneLoadData = [
   { zone: 'HSR Layout', current: 312, peak: 395, capacity: 470 },
   { zone: 'Electronic City', current: 520, peak: 610, capacity: 700 },
 ];
+
+// Derive risk level from peak/capacity utilization
+function getZoneRisk(peak: number, capacity: number): { level: string; color: string; bgColor: string } {
+  const util = peak / capacity;
+  if (util >= 0.90) return { level: 'Critical', color: 'text-alert-red', bgColor: 'bg-alert-red-light' };
+  if (util >= 0.80) return { level: 'High', color: 'text-alert-amber', bgColor: 'bg-alert-amber-light' };
+  if (util >= 0.70) return { level: 'Moderate', color: 'text-amber-700', bgColor: 'bg-yellow-50' };
+  return { level: 'Normal', color: 'text-alert-green', bgColor: 'bg-alert-green-light' };
+}
+
+// Flag zones with sharp evening peak (>85% capacity during 18:00-22:00)
+function hasEveningPeakRisk(peak: number, capacity: number): boolean {
+  return (peak / capacity) >= 0.85;
+}
 
 // Weekly trend data
 const weeklyTrend = [
@@ -86,6 +100,8 @@ const modelMetrics = [
   { metric: 'MAPE', value: '2.34%', status: 'good' },
   { metric: 'RMSE', value: '142 MW', status: 'good' },
   { metric: 'R² Score', value: '0.967', status: 'good' },
+  { metric: 'vs. Historical Avg Baseline', value: '+38.2% better', status: 'good' },
+  { metric: 'False Positive Rate', value: '4.1%', status: 'good' },
   { metric: 'Forecast Horizon', value: '48 hrs', status: 'info' },
   { metric: 'Last Trained', value: '25 Apr 2026, 06:00', status: 'info' },
   { metric: 'Data Points', value: '1,04,832', status: 'info' },
@@ -336,6 +352,71 @@ export const DemandForecastingPage: React.FC = () => {
                 <Bar dataKey="capacity" name="Capacity" fill="#dee2e6" radius={[0, 3, 3, 0]} barSize={10} />
               </BarChart>
             </ResponsiveContainer>
+          </div>
+
+          {/* Zone Risk Assessment Table */}
+          <div className="border-t border-slate-100 px-5 py-4">
+            <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-3">
+              Zone Risk Classification — Evening Peak (18:00–22:00)
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Zone</th>
+                    <th>Current Load</th>
+                    <th>Peak Demand</th>
+                    <th>Capacity</th>
+                    <th>Utilization</th>
+                    <th>Risk Level</th>
+                    <th>Evening Peak</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {zoneLoadData.map((z) => {
+                    const risk = getZoneRisk(z.peak, z.capacity);
+                    const util = ((z.peak / z.capacity) * 100).toFixed(1);
+                    const eveningRisk = hasEveningPeakRisk(z.peak, z.capacity);
+                    return (
+                      <tr key={z.zone}>
+                        <td><span className="font-medium text-slate-700 text-xs">{z.zone}</span></td>
+                        <td><span className="font-mono text-xs text-slate-600">{z.current} MW</span></td>
+                        <td><span className="font-mono text-xs text-slate-600">{z.peak} MW</span></td>
+                        <td><span className="font-mono text-xs text-slate-400">{z.capacity} MW</span></td>
+                        <td>
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div 
+                                className={`h-full rounded-full ${parseFloat(util) >= 85 ? 'bg-alert-red' : parseFloat(util) >= 75 ? 'bg-alert-amber' : 'bg-alert-green'}`}
+                                style={{ width: `${Math.min(parseFloat(util), 100)}%` }}
+                              />
+                            </div>
+                            <span className="font-mono text-xs text-slate-600">{util}%</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span className={`badge ${risk.bgColor} ${risk.color}`}>{risk.level}</span>
+                        </td>
+                        <td>
+                          {eveningRisk ? (
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-alert-red">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                                <line x1="12" y1="9" x2="12" y2="13" />
+                                <line x1="12" y1="17" x2="12.01" y2="17" />
+                              </svg>
+                              Flagged
+                            </span>
+                          ) : (
+                            <span className="text-xs text-slate-400">—</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 import type { AnomalyRecord } from '../data/syntheticData';
 
 /**
@@ -50,7 +51,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   };
 
   return (
-    <div className="panel" id="anomaly-data-table">
+    <div className="panel flex-1 flex flex-col min-h-0" id="anomaly-data-table">
       {/* Panel Header */}
       <div className="panel-header flex items-center justify-between">
         <div>
@@ -71,7 +72,7 @@ export const DataTable: React.FC<DataTableProps> = ({
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto flex-1">
         <table className="data-table">
           <thead>
             <tr>
